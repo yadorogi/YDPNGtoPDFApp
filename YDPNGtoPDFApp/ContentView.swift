@@ -9,10 +9,6 @@ import SwiftUI
 import PDFKit
 import UniformTypeIdentifiers
 
-import SwiftUI
-import PDFKit
-import UniformTypeIdentifiers
-
 struct ContentView: View {
     @State private var statusMessage = "フォルダを選択してPNG→PDF変換"
 
@@ -46,7 +42,9 @@ struct ContentView: View {
                         return false
                     }
                     return type == .png
-                }.sorted { $0.lastPathComponent < $1.lastPathComponent } // ファイル名順にソート
+                }.sorted { a, b in
+                    a.lastPathComponent.localizedStandardCompare(b.lastPathComponent) == .orderedAscending
+                } // ファイル名順にソート
 
                 guard !pngFiles.isEmpty else {
                     statusMessage = "PNGファイルが見つかりません"
