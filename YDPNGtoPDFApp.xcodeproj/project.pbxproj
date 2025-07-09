@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5204DAC22E1E40DC006E2604 /* HTML2Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = 5204DAC12E1E40DC006E2604 /* HTML2Markdown */; };
+		5204DAC52E1E4121006E2604 /* RichEditorSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5204DAC42E1E4121006E2604 /* RichEditorSwiftUI */; };
+		5204DAC82E1E4136006E2604 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5204DAC72E1E4136006E2604 /* SwiftSoup */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		524E97E52E016AFB00F8175C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5204DAC22E1E40DC006E2604 /* HTML2Markdown in Frameworks */,
+				5204DAC52E1E4121006E2604 /* RichEditorSwiftUI in Frameworks */,
+				5204DAC82E1E4136006E2604 /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +121,9 @@
 			);
 			name = YDPNGtoPDFApp;
 			packageProductDependencies = (
+				5204DAC12E1E40DC006E2604 /* HTML2Markdown */,
+				5204DAC42E1E4121006E2604 /* RichEditorSwiftUI */,
+				5204DAC72E1E4136006E2604 /* SwiftSoup */,
 			);
 			productName = YDPNGtoPDFApp;
 			productReference = 524E97D62E016AF900F8175C /* YDPNGtoPDFApp.app */;
@@ -195,6 +207,12 @@
 			);
 			mainGroup = 524E97CD2E016AF900F8175C;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				5204DABF2E1E40A7006E2604 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				5204DAC02E1E40DC006E2604 /* XCRemoteSwiftPackageReference "HTML2Markdown" */,
+				5204DAC32E1E4121006E2604 /* XCRemoteSwiftPackageReference "rich-editor-swiftui" */,
+				5204DAC62E1E4136006E2604 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 524E97D72E016AF900F8175C /* Products */;
 			projectDirPath = "";
@@ -553,6 +571,59 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5204DABF2E1E40A7006E2604 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.59.1;
+			};
+		};
+		5204DAC02E1E40DC006E2604 /* XCRemoteSwiftPackageReference "HTML2Markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/divadretlaw/HTML2Markdown";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
+		5204DAC32E1E4121006E2604 /* XCRemoteSwiftPackageReference "rich-editor-swiftui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/rich-editor-swiftui";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.1;
+			};
+		};
+		5204DAC62E1E4136006E2604 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.8;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5204DAC12E1E40DC006E2604 /* HTML2Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5204DAC02E1E40DC006E2604 /* XCRemoteSwiftPackageReference "HTML2Markdown" */;
+			productName = HTML2Markdown;
+		};
+		5204DAC42E1E4121006E2604 /* RichEditorSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5204DAC32E1E4121006E2604 /* XCRemoteSwiftPackageReference "rich-editor-swiftui" */;
+			productName = RichEditorSwiftUI;
+		};
+		5204DAC72E1E4136006E2604 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5204DAC62E1E4136006E2604 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 524E97CE2E016AF900F8175C /* Project object */;
 }

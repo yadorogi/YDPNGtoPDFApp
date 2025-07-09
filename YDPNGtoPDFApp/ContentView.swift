@@ -44,6 +44,8 @@ struct ContentView: View {
                     return type == .png
                 }.sorted { a, b in
                     a.lastPathComponent.localizedStandardCompare(b.lastPathComponent) == .orderedAscending
+                }.sorted { a, b in
+                    a.lastPathComponent.localizedStandardCompare(b.lastPathComponent) == .orderedAscending
                 } // ファイル名順にソート
 
                 guard !pngFiles.isEmpty else {
@@ -74,54 +76,3 @@ struct ContentView: View {
         }
     }
 }
-
-/*
-struct ContentView: View {
-    @State private var statusMessage = "画像を選択してPDFに変換します"
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text(statusMessage)
-                .padding()
-
-            Button("PNGを選んでPDFを作成") {
-                convertPNGsToPDF()
-            }
-            .padding()
-        }
-        .frame(width: 400, height: 200)
-    }
-
-    func convertPNGsToPDF() {
-        let openPanel = NSOpenPanel()
-        openPanel.allowedContentTypes = [.png]
-        openPanel.allowsMultipleSelection = true
-
-        if openPanel.runModal() == .OK {
-            let urls = openPanel.urls
-
-            let savePanel = NSSavePanel()
-            savePanel.allowedContentTypes = [.pdf]
-            savePanel.nameFieldStringValue = "output.pdf"
-
-            if savePanel.runModal() == .OK, let outputURL = savePanel.url {
-                let pdfDocument = PDFDocument()
-
-                for (index, url) in urls.enumerated() {
-                    if let image = NSImage(contentsOf: url),
-                       let page = PDFPage(image: image) {
-                        pdfDocument.insert(page, at: index)
-                    }
-                }
-
-                if pdfDocument.write(to: outputURL) {
-                    statusMessage = "PDFを作成しました: \(outputURL.lastPathComponent)"
-                } else {
-                    statusMessage = "PDFの作成に失敗しました"
-                }
-            }
-        }
-    }
-}
-*/
-

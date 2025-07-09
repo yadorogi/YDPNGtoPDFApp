@@ -1,0 +1,42 @@
+{
+  "originHash" : "72be496039a737fb1fe71884f00300c183813048697e742de1db1c968a190254",
+  "pins" : [
+    {
+      "identity" : "html2markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/divadretlaw/HTML2Markdown",
+      "state" : {
+        "revision" : "fe37711094b261d9fceeaf021143002ba37e563e",
+        "version" : "3.0.2"
+      }
+    },
+    {
+      "identity" : "rich-editor-swiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/canopas/rich-editor-swiftui",
+      "state" : {
+        "revision" : "b39107e30558b0f87d28edca4dfbf02ac6dcf3de",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swiftlintplugins",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "state" : {
+        "revision" : "8545ddf4de043e6f2051c5cf204f39ef778ebf6b",
+        "version" : "0.59.1"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "aa85ee96017a730031bafe411cde24a08a17a9c9",
+        "version" : "2.8.8"
+      }
+    }
+  ],
+  "version" : 3
+}
