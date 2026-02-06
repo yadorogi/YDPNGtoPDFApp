@@ -35,13 +35,14 @@ struct ContentView: View {
         if openPanel.runModal() == .OK, let folderURL = openPanel.url {
             do {
                 let fileManager = FileManager.default
-                let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil)
+                let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.contentTypeKey])
 
-                let pngFiles = contents.filter {
-                    guard let type = try? $0.resourceValues(forKeys: [.contentTypeKey]).contentType else {
-                        return false
+                let pngFiles = contents.filter { url in
+                    if let values = try? url.resourceValues(forKeys: [.contentTypeKey]),
+                       let type = values.contentType {
+                        return type == .png
                     }
-                    return type == .png
+                    return false
                 }.sorted { $0.lastPathComponent < $1.lastPathComponent } // ファイル名順にソート
 
                 guard !pngFiles.isEmpty else {
@@ -70,5 +71,11 @@ struct ContentView: View {
                 statusMessage = "エラー: \(error.localizedDescription)"
             }
         }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
