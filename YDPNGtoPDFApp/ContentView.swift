@@ -9,10 +9,6 @@ import SwiftUI
 import PDFKit
 import UniformTypeIdentifiers
 
-import SwiftUI
-import PDFKit
-import UniformTypeIdentifiers
-
 struct ContentView: View {
     @State private var statusMessage = "フォルダを選択してPNG→PDF変換"
 
