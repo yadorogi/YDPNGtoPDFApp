@@ -9,10 +9,6 @@ import SwiftUI
 import PDFKit
 import UniformTypeIdentifiers
 
-import SwiftUI
-import PDFKit
-import UniformTypeIdentifiers
-
 struct ContentView: View {
     @State private var statusMessage = "フォルダを選択してPNG→PDF変換"
 
@@ -39,13 +35,14 @@ struct ContentView: View {
         if openPanel.runModal() == .OK, let folderURL = openPanel.url {
             do {
                 let fileManager = FileManager.default
-                let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: nil)
+                let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.contentTypeKey])
 
-                let pngFiles = contents.filter {
-                    guard let type = try? $0.resourceValues(forKeys: [.contentTypeKey]).contentType else {
-                        return false
+                let pngFiles = contents.filter { url in
+                    if let values = try? url.resourceValues(forKeys: [.contentTypeKey]),
+                       let type = values.contentType {
+                        return type == .png
                     }
-                    return type == .png
+                    return false
                 }.sorted { $0.lastPathComponent < $1.lastPathComponent } // ファイル名順にソート
 
                 guard !pngFiles.isEmpty else {
@@ -77,53 +74,8 @@ struct ContentView: View {
     }
 }
 
-/*
-struct ContentView: View {
-    @State private var statusMessage = "画像を選択してPDFに変換します"
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text(statusMessage)
-                .padding()
-
-            Button("PNGを選んでPDFを作成") {
-                convertPNGsToPDF()
-            }
-            .padding()
-        }
-        .frame(width: 400, height: 200)
-    }
-
-    func convertPNGsToPDF() {
-        let openPanel = NSOpenPanel()
-        openPanel.allowedContentTypes = [.png]
-        openPanel.allowsMultipleSelection = true
-
-        if openPanel.runModal() == .OK {
-            let urls = openPanel.urls
-
-            let savePanel = NSSavePanel()
-            savePanel.allowedContentTypes = [.pdf]
-            savePanel.nameFieldStringValue = "output.pdf"
-
-            if savePanel.runModal() == .OK, let outputURL = savePanel.url {
-                let pdfDocument = PDFDocument()
-
-                for (index, url) in urls.enumerated() {
-                    if let image = NSImage(contentsOf: url),
-                       let page = PDFPage(image: image) {
-                        pdfDocument.insert(page, at: index)
-                    }
-                }
-
-                if pdfDocument.write(to: outputURL) {
-                    statusMessage = "PDFを作成しました: \(outputURL.lastPathComponent)"
-                } else {
-                    statusMessage = "PDFの作成に失敗しました"
-                }
-            }
-        }
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
-*/
-
