@@ -11,66 +11,113 @@ import UniformTypeIdentifiers
 
 struct ContentView: View {
     @State private var statusMessage = "フォルダを選択してPNG→PDF変換"
+    @State private var isProcessing = false
 
     var body: some View {
         VStack(spacing: 20) {
             Text(statusMessage)
+                .multilineTextAlignment(.center)
                 .padding()
 
-            Button("フォルダを選んでPDFを作成") {
-                convertFolderPNGsToPDF()
+            if isProcessing {
+                ProgressView()
             }
+
+            Button("フォルダを選んでPDFを作成") {
+                selectFolderAndConvert()
+            }
+            .disabled(isProcessing)
             .padding()
         }
         .frame(width: 400, height: 200)
     }
 
-    func convertFolderPNGsToPDF() {
+    func selectFolderAndConvert() {
         let openPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
         openPanel.canChooseFiles = false
         openPanel.allowsMultipleSelection = false
         openPanel.prompt = "フォルダを選択"
 
-        if openPanel.runModal() == .OK, let folderURL = openPanel.url {
-            do {
-                let fileManager = FileManager.default
-                let contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.contentTypeKey])
+        guard openPanel.runModal() == .OK, let folderURL = openPanel.url else { return }
 
-                let pngFiles = contents.filter { url in
-                    if let values = try? url.resourceValues(forKeys: [.contentTypeKey]),
-                       let type = values.contentType {
-                        return type == .png
-                    }
-                    return false
-                }.sorted { $0.lastPathComponent < $1.lastPathComponent } // ファイル名順にソート
+        let outputPDFName = folderURL.lastPathComponent + ".pdf"
+        let outputURL = folderURL.appendingPathComponent(outputPDFName)
 
-                guard !pngFiles.isEmpty else {
-                    statusMessage = "PNGファイルが見つかりません"
-                    return
-                }
-
-                let pdfDocument = PDFDocument()
-                for (index, url) in pngFiles.enumerated() {
-                    if let image = NSImage(contentsOf: url),
-                       let page = PDFPage(image: image) {
-                        pdfDocument.insert(page, at: index)
-                    }
-                }
-
-                let outputPDFName = folderURL.lastPathComponent + ".pdf"
-                let outputURL = folderURL.appendingPathComponent(outputPDFName)
-
-                if pdfDocument.write(to: outputURL) {
-                    statusMessage = "PDFを作成しました: \(outputPDFName)"
-                } else {
-                    statusMessage = "PDFの作成に失敗しました"
-                }
-
-            } catch {
-                statusMessage = "エラー: \(error.localizedDescription)"
+        if FileManager.default.fileExists(atPath: outputURL.path) {
+            let alert = NSAlert()
+            alert.messageText = "\(outputPDFName) は既に存在します"
+            alert.informativeText = "上書きしてもよろしいですか?"
+            alert.alertStyle = .warning
+            alert.addButton(withTitle: "上書き")
+            alert.addButton(withTitle: "キャンセル")
+            guard alert.runModal() == .alertFirstButtonReturn else {
+                statusMessage = "キャンセルしました"
+                return
             }
         }
+
+        isProcessing = true
+        statusMessage = "変換中..."
+
+        Task.detached(priority: .userInitiated) {
+            let result = Self.convertPNGsToPDF(folderURL: folderURL, outputURL: outputURL)
+            await MainActor.run {
+                isProcessing = false
+                statusMessage = result
+            }
+        }
+    }
+
+    static func naturalSorted(_ urls: [URL]) -> [URL] {
+        urls.sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }
+    }
+
+    static func convertPNGsToPDF(folderURL: URL, outputURL: URL) -> String {
+        let fileManager = FileManager.default
+        let contents: [URL]
+        do {
+            contents = try fileManager.contentsOfDirectory(at: folderURL, includingPropertiesForKeys: [.contentTypeKey])
+        } catch {
+            return "エラー: \(error.localizedDescription)"
+        }
+
+        let pngFiles = naturalSorted(contents.filter { url in
+            if let values = try? url.resourceValues(forKeys: [.contentTypeKey]),
+               let type = values.contentType {
+                return type == .png
+            }
+            return false
+        })
+
+        guard !pngFiles.isEmpty else {
+            return "PNGファイルが見つかりません"
+        }
+
+        let pdfDocument = PDFDocument()
+        var failedFileNames: [String] = []
+
+        for url in pngFiles {
+            if let image = NSImage(contentsOf: url), let page = PDFPage(image: image) {
+                pdfDocument.insert(page, at: pdfDocument.pageCount)
+            } else {
+                failedFileNames.append(url.lastPathComponent)
+            }
+        }
+
+        guard pdfDocument.pageCount > 0 else {
+            return "PDFに変換できる画像がありませんでした"
+        }
+
+        guard pdfDocument.write(to: outputURL) else {
+            return "PDFの作成に失敗しました"
+        }
+
+        var message = "PDFを作成しました: \(outputURL.lastPathComponent)(\(pdfDocument.pageCount)ページ)"
+        if !failedFileNames.isEmpty {
+            message += "\n読み込めなかったファイル: \(failedFileNames.joined(separator: ", "))"
+        }
+        return message
     }
 }
 
