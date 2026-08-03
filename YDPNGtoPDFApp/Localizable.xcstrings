@@ -1,0 +1,175 @@
+{
+  "sourceLanguage" : "ja",
+  "strings" : {
+    "alert.cancel" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
+          }
+        }
+      }
+    },
+    "alert.overwriteConfirm" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上書き"
+          }
+        }
+      }
+    },
+    "alert.overwriteMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上書きしてもよろしいですか?"
+          }
+        }
+      }
+    },
+    "alert.overwriteTitle" : {
+      "comment" : "%@ = 出力ファイル名",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ は既に存在します"
+          }
+        }
+      }
+    },
+    "picker.selectFolderPrompt" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを選択"
+          }
+        }
+      }
+    },
+    "status.cancelled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセルしました"
+          }
+        }
+      }
+    },
+    "status.converting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変換中..."
+          }
+        }
+      }
+    },
+    "status.error" : {
+      "comment" : "%@ = エラーの説明文",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラー: %@"
+          }
+        }
+      }
+    },
+    "status.failedFiles" : {
+      "comment" : "%@ = 読み込みに失敗したファイル名のカンマ区切りリスト",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\n読み込めなかったファイル: %@"
+          }
+        }
+      }
+    },
+    "status.initial" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを選択して画像をPDFに変換"
+          }
+        }
+      }
+    },
+    "status.noConvertibleImages" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDFに変換できる画像がありませんでした"
+          }
+        }
+      }
+    },
+    "status.noImagesFound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "画像ファイルが見つかりません"
+          }
+        }
+      }
+    },
+    "status.pdfCreated" : {
+      "comment" : "1つ目の%@ = 出力ファイル名, 2つ目の%@ = ページ数",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDFを作成しました: %@(%@ページ)"
+          }
+        }
+      }
+    },
+    "status.writeFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PDFの作成に失敗しました"
+          }
+        }
+      }
+    },
+    "フォルダを選んでPDFを作成" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フォルダを選んでPDFを作成"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
